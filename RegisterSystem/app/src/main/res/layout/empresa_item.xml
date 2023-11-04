@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/espaco"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
+
+    <TextView
+        android:id="@+id/txtEmpresaName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_margin="20dp"
+        android:text="Empresa Name"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtEmpresaTel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Telefone"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmpresaName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    />
+
+    <TextView
+        android:id="@+id/txtEmpresaEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Email"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmpresaTel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    />
+    <Button
+        android:id="@+id/btShowComprovante"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Comprovantes"
+        android:textSize="12dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/dark_blue"
+        app:layout_constraintEnd_toEndOf="@+id/txtEmpresaEmail"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmpresaTel"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/azul_turquesa"
+        app:layout_constraintTop_toBottomOf="@+id/btShowComprovante"
+        android:layout_margin="20dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

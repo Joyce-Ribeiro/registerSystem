@@ -89,8 +89,9 @@
         android:layout_margin="40dp"
         android:background="@drawable/background_button"
         android:padding="15dp"
-        android:text="Criar"
-        android:textColor="@color/azul_turquesa" />
+        android:text="Entrar"
+        android:textColor="@color/azul_turquesa"
+        android:onClick="entrarConta"/>
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
