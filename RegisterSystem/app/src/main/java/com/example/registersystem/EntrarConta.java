@@ -2,6 +2,7 @@ package com.example.registersystem;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.database.SQLException;
@@ -35,6 +36,63 @@ public class EntrarConta extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrar_conta);
+
+        AppCompatButton loginConta = findViewById(R.id.loginConta);
+
+        RadioButton radioCPF = findViewById(R.id.radio_cpf);
+        RadioButton radioCNPJ = findViewById(R.id.radio_cnpj);
+
+        loginConta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (radioCPF.isChecked()) {
+
+                    EditText editTextCpf = findViewById(R.id.editTextCpfCnpj);
+                    EditText editTextSenha = findViewById(R.id.editTextSenha);
+
+                    String cpf = editTextCpf.getText().toString();
+                    String senha = editTextSenha.getText().toString();
+
+                    criarConexao();
+
+                    Cliente cliente = bDcliente.buscarCliente(cpf, senha);
+
+                    if (cliente != null) {
+                        ArrayList<Empresa> empresas = bDcliente.buscarEmpresas(cliente);
+                        if (empresas == null) {
+                            empresas = new ArrayList<>();
+                        }
+                        Intent intent = new Intent(EntrarConta.this, RecyclerViewEmpresas.class);
+                        intent.putExtra("empresasList", empresas);
+                        startActivity(intent);
+                    }
+
+
+                } else if (radioCNPJ.isChecked()) {
+                    EditText editTextCnpj = findViewById(R.id.editTextCpfCnpj);
+                    EditText editTextSenha = findViewById(R.id.editTextSenha);
+
+                    String cnpj = editTextCnpj.getText().toString();
+                    String senha = editTextSenha.getText().toString();
+
+                    criarConexao();
+
+                    Empresa empresa = bDempresa.buscarEmpresa(cnpj, senha);
+
+                    if (empresa != null) {
+                        ArrayList<Cliente> clientes = bDempresa.buscarClientes(empresa);
+                        if (clientes == null) {
+                            clientes = new ArrayList<>();
+                        }
+                        Intent intent = new Intent(EntrarConta.this, RecyclerViewClientes.class);
+                        intent.putExtra("clientesList", clientes);
+                        startActivity(intent);
+                    }
+
+                }
+            }
+        });
     }
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
@@ -45,55 +103,7 @@ public class EntrarConta extends AppCompatActivity {
             changeLabelToCPF();
         }
     }
-    public void entrarConta(View view){
-        RadioButton radioCPF = findViewById(R.id.radio_cpf);
-        RadioButton radioCNPJ = findViewById(R.id.radio_cnpj);
 
-        if (radioCPF.isChecked()) {
-            EditText editTextCpf = findViewById(R.id.editTextCpfCnpj);
-            EditText editTextSenha = findViewById(R.id.editTextSenha);
-
-            String cpf = editTextCpf.getText().toString();
-            String senha = editTextSenha.getText().toString();
-
-            criarConexao();
-
-            Cliente cliente = bDcliente.buscarCliente(cpf,senha);
-
-            if(cliente!=null){
-                ArrayList<Empresa> empresas = bDcliente.buscarEmpresas(cliente);
-                Intent intent = new Intent(this, RecyclerViewEmpresas.class);
-                intent.putExtra("empresasList", empresas);
-                startActivity(intent);
-            }else{
-                Intent intent = new Intent(this, CriarContrato.class);
-                startActivity(intent);
-            }
-
-
-        } else if (radioCNPJ.isChecked()) {
-            EditText editTextCnpj = findViewById(R.id.editTextCpfCnpj);
-            EditText editTextSenha = findViewById(R.id.editTextSenha);
-
-            String cnpj = editTextCnpj.getText().toString();
-            String senha = editTextSenha.getText().toString();
-
-            criarConexao();
-
-            Empresa empresa =bDempresa.buscarEmpresa(cnpj,senha);
-
-            if(empresa!=null){
-                ArrayList<Cliente> clientes = bDempresa.buscarClientes(empresa);
-                Intent intent = new Intent(this, RecyclerViewClientes.class);
-                intent.putExtra("clientesList", clientes);
-                startActivity(intent);
-            }else{
-                Intent intent = new Intent(this, CriarContrato.class);
-                startActivity(intent);
-            }
-        }
-
-    }
     private void criarConexao(){
         try {
             dadosOpenHelper = new DadosOpenHelper(this);
@@ -119,5 +129,5 @@ public class EntrarConta extends AppCompatActivity {
         TextView labelCpfCnpj = findViewById(R.id.labelCpfCnpj);
         labelCpfCnpj.setText("CPF:");
     }
-
 }
+

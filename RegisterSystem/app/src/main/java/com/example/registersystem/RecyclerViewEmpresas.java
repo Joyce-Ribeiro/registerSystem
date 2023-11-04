@@ -25,9 +25,13 @@ public class RecyclerViewEmpresas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRecyclerViewEmpresasBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        empresasList = (ArrayList<Empresa>) getIntent().getSerializableExtra("empresasList");
-
+        if (getIntent().hasExtra("empresasList")) {
+            try {
+                empresasList = (ArrayList<Empresa>) getIntent().getSerializableExtra("empresasList");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         RecyclerView recyclerViewEmpresas = binding.RecyclerViewEmpresa;
         recyclerViewEmpresas.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewEmpresas.setHasFixedSize(true);
