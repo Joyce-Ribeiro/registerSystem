@@ -1,9 +1,10 @@
 package com.example.registersystem.model;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Comprovante {
+public class Comprovante implements Serializable {
     private String nomeArquivo;
     private Date data;
     private File arquivo;

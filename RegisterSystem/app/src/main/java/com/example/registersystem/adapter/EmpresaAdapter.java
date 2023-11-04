@@ -36,7 +36,6 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.EmpresaV
         holder.binding.txtEmpresaTel.setText(empresaList.get(position).getTelefone());
         holder.binding.txtEmpresaEmail.setText(empresaList.get(position).getEmail());
 
-
     }
 
     @Override

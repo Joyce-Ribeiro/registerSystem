@@ -23,8 +23,6 @@ public class CriarContrato extends AppCompatActivity {
     final Context context = this;
     private BDcliente bDcliente;
     private BDempresa bDempresa;
-
-    private String cpf;
     private BDContrato bdContrato;
     private SQLiteDatabase conexao;
 
@@ -41,6 +39,8 @@ public class CriarContrato extends AppCompatActivity {
             public void onClick(View v) {
                     EditText editTextCnpj = findViewById(R.id.editTextCnpj);
                     String cnpj = editTextCnpj.getText().toString();
+                    EditText editTextCpf = findViewById(R.id.editTextCpf);
+                    String cpf = editTextCpf.getText().toString();
 
                     criarConexao();
                     Cliente cliente = bDcliente.buscarCliente(cpf);

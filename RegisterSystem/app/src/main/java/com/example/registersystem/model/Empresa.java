@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Empresa extends Usuario implements Serializable {
     private String cnpj;
 
+
     public Empresa(String nome, String telefone, String email, String cnpj, String senha){
         super(nome, telefone, email, senha);
         this.cnpj=cnpj;
