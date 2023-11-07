@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,15 +18,10 @@ import java.util.Locale;
 public class ComprovanteAdapter extends RecyclerView.Adapter<ComprovanteAdapter.ComprovanteViewHolder>{
     private ArrayList<Comprovante> comprovanteList;
     private Context context;
-    private OnItemClickListener listener;
 
-    public ComprovanteAdapter(ArrayList<Comprovante> comprovanteList, Context context, OnItemClickListener listener) {
+    public ComprovanteAdapter(ArrayList<Comprovante> comprovanteList, Context context) {
         this.comprovanteList = comprovanteList;
         this.context = context;
-        this.listener = listener;
-    }
-    public interface OnItemClickListener {
-        void onItemClick(Comprovante comprovante);
     }
     @NonNull
     @Override
@@ -45,12 +39,6 @@ public class ComprovanteAdapter extends RecyclerView.Adapter<ComprovanteAdapter.
         holder.binding.txtArquivoCnpj.setText(comprovanteList.get(position).getEmpresa().getCnpj());
         holder.binding.txtArquivoCpf.setText(comprovanteList.get(position).getCliente().getCpf());
 
-        holder.itemView.setOnClickListener(v -> {
-            int pos = holder.getAdapterPosition();
-            if (pos != RecyclerView.NO_POSITION && listener != null) {
-                listener.onItemClick(comprovanteList.get(pos));
-            }
-        });
     }
     @Override
     public int getItemCount() {

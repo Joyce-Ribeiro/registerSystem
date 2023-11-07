@@ -31,7 +31,6 @@ public class RecyclerViewClientes extends AppCompatActivity {
         if (getIntent().hasExtra("clientesList")) {
             try {
                 empresa = (Empresa) getIntent().getSerializableExtra("empresa");
-                Log.d("teste", empresa.getCnpj());
                 clientesList = (ArrayList<Cliente>) getIntent().getSerializableExtra("clientesList");
             } catch (Exception e) {
                 e.printStackTrace();
