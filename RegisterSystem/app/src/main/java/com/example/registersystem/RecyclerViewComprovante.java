@@ -2,6 +2,7 @@ package com.example.registersystem;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.registersystem.adapter.ComprovanteAdapter;
@@ -18,10 +20,12 @@ import com.example.registersystem.databinding.ActivityRecyclerViewComprovanteBin
 import com.example.registersystem.model.Cliente;
 import com.example.registersystem.model.Comprovante;
 import com.example.registersystem.model.Empresa;
+import android.net.Uri;
 
+import java.io.File;
 import java.util.ArrayList;
 
-public class RecyclerViewComprovante extends AppCompatActivity {
+public class RecyclerViewComprovante extends AppCompatActivity implements ComprovanteAdapter.OnItemClickListener{
     private ActivityRecyclerViewComprovanteBinding binding;
     private ComprovanteAdapter comprovanteAdapter;
     private ArrayList<Comprovante> comprovantesList = new ArrayList<>();
@@ -46,7 +50,7 @@ public class RecyclerViewComprovante extends AppCompatActivity {
             try {
                 empresa = (Empresa) getIntent().getSerializableExtra("empresa");
                 cliente = (Cliente) getIntent().getSerializableExtra("cliente");
-                comprovantesList = bDcomprovante.buscarComprovantes(cliente, empresa);
+                comprovantesList = bDcomprovante.buscarComprovantes(cliente, empresa, this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -56,7 +60,7 @@ public class RecyclerViewComprovante extends AppCompatActivity {
         RecyclerView recyclerViewComprovantes = binding.RecyclerViewComprovante;
         recyclerViewComprovantes.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewComprovantes.setHasFixedSize(true);
-        comprovanteAdapter = new ComprovanteAdapter(comprovantesList, this);
+        comprovanteAdapter = new ComprovanteAdapter(comprovantesList, this, this);
         recyclerViewComprovantes.setAdapter(comprovanteAdapter);
 
         if (visibilidade == 1) {
@@ -77,6 +81,25 @@ public class RecyclerViewComprovante extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onItemClick(Comprovante comprovante) {
+        File arquivo = comprovante.getArquivo();
+        Log.d("MEUDEUSEUNAOAGUENTOMAIS:", arquivo.toString());
+
+        if (arquivo != null) {
+            Uri uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", arquivo);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(uri, "application/pdf");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            } else {
+                Log.d("TAG", "Nenhum aplicativo pode abrir este arquivo");
+            }
+        }
     }
     private void criarConexao(){
         try {

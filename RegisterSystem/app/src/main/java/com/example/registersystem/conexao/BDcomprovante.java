@@ -1,6 +1,7 @@
 package com.example.registersystem.conexao;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -52,7 +53,7 @@ public class BDcomprovante {
     }
 
 
-    public ArrayList<Comprovante> buscarComprovantes(Cliente cliente, Empresa empresa) {
+    public ArrayList<Comprovante> buscarComprovantes(Cliente cliente, Empresa empresa, Context context) {
 
         StringBuilder sql = new StringBuilder();
         sql.append("    SELECT COMPROVANTE.*  ");
@@ -79,9 +80,10 @@ public class BDcomprovante {
                 Date data_comp = data_string_to_date;
 
                 byte[] arquivoBytes = (resultado.getBlob(resultado.getColumnIndexOrThrow("ARQUIVO")));
-                File arquivoFile = new File(nome_comp);
+                File arquivoFile = null;
                 if (arquivoBytes != null) {
                     try {
+                        arquivoFile = File.createTempFile("temp_file", ".extensao_do_arquivo", context.getCacheDir());
                         FileOutputStream outputStream = new FileOutputStream(arquivoFile);
                         outputStream.write(arquivoBytes);
                         outputStream.close();
@@ -90,7 +92,6 @@ public class BDcomprovante {
                         e.printStackTrace();
                     }
                 }
-                File arq_comp = (arquivoFile);
                 BDempresa bdempresa = new BDempresa(conexao);
                 com.example.registersystem.conexao.BDcliente bdcliente = new com.example.registersystem.conexao.BDcliente(conexao);
 
