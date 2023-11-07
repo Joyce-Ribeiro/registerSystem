@@ -47,15 +47,16 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
             public void onClick(View v) {
 
                 Cliente cliente = clienteList.get(position);
+                if (context instanceof RecyclerViewClientes) {
+                    RecyclerViewClientes recyclerViewClientes = (RecyclerViewClientes) context;
+                    Empresa empresa = recyclerViewClientes.getEmpresa();
 
-                RecyclerViewClientes recyclerViewClientes = (RecyclerViewClientes) context;
-                Empresa empresa = recyclerViewClientes.getEmpresa();
+                    Intent intent = new Intent(v.getContext(), RecyclerViewComprovante.class);
 
-                Intent intent = new Intent(v.getContext(), RecyclerViewComprovante.class);
-
-                intent.putExtra("cliente", cliente);
-                intent.putExtra("empresa", empresa);
-                v.getContext().startActivity(intent);
+                    intent.putExtra("cliente", cliente);
+                    intent.putExtra("empresa", empresa);
+                    v.getContext().startActivity(intent);
+                }
             }
         });
 

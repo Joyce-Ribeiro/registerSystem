@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.registersystem.adapter.ClientAdapter;
 import com.example.registersystem.databinding.ActivityRecyclerViewClientesBinding;
@@ -29,7 +30,8 @@ public class RecyclerViewClientes extends AppCompatActivity {
 
         if (getIntent().hasExtra("clientesList")) {
             try {
-                empresa = getIntent().getParcelableExtra("empresa");
+                empresa = (Empresa) getIntent().getSerializableExtra("empresa");
+                Log.d("teste", empresa.getCnpj());
                 clientesList = (ArrayList<Cliente>) getIntent().getSerializableExtra("clientesList");
             } catch (Exception e) {
                 e.printStackTrace();
