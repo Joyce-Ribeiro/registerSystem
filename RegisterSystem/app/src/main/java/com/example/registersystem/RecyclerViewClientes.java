@@ -16,6 +16,9 @@ import java.util.ArrayList;
 public class RecyclerViewClientes extends AppCompatActivity {
     private ActivityRecyclerViewClientesBinding binding;
     private ClientAdapter clientAdapter;
+
+    private Empresa empresa;
+
     private ArrayList<Cliente> clientesList = new ArrayList<>();
 
     @Override
@@ -26,12 +29,12 @@ public class RecyclerViewClientes extends AppCompatActivity {
 
         if (getIntent().hasExtra("clientesList")) {
             try {
+                empresa = getIntent().getParcelableExtra("empresa");
                 clientesList = (ArrayList<Cliente>) getIntent().getSerializableExtra("clientesList");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        clientesList = (ArrayList<Cliente>) getIntent().getSerializableExtra("clientesList");
 
         RecyclerView recyclerViewClientes = binding.RecyclerViewCliente;
         recyclerViewClientes.setLayoutManager(new LinearLayoutManager(this));
@@ -39,6 +42,9 @@ public class RecyclerViewClientes extends AppCompatActivity {
         clientAdapter = new ClientAdapter(clientesList,this);
         recyclerViewClientes.setAdapter(clientAdapter);
 
+    }
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
 }

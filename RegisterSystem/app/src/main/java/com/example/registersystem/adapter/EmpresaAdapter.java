@@ -1,13 +1,19 @@
 package com.example.registersystem.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.registersystem.RecyclerViewComprovante;
+import com.example.registersystem.RecyclerViewEmpresas;
 import com.example.registersystem.databinding.EmpresaItemBinding;
+import com.example.registersystem.model.Cliente;
 import com.example.registersystem.model.Empresa;
 
 import java.util.ArrayList;
@@ -36,6 +42,24 @@ public class EmpresaAdapter extends RecyclerView.Adapter<EmpresaAdapter.EmpresaV
         holder.binding.txtEmpresaTel.setText(empresaList.get(position).getTelefone());
         holder.binding.txtEmpresaEmail.setText(empresaList.get(position).getEmail());
 
+        holder.binding.btShowComprovante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Empresa empresa = empresaList.get(position);
+
+                if (context instanceof RecyclerViewEmpresas) {
+                    RecyclerViewEmpresas recyclerViewEmpresas = (RecyclerViewEmpresas) context;
+                    Cliente cliente = recyclerViewEmpresas.getCliente();
+                    Intent intent = new Intent(v.getContext(), RecyclerViewComprovante.class);
+
+                    intent.putExtra("cliente", cliente);
+                    intent.putExtra("empresa", empresa);
+                    v.getContext().startActivity(intent);
+                }
+
+            }
+        });
     }
 
     @Override

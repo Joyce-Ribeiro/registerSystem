@@ -1,6 +1,7 @@
 package com.example.registersystem.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -41,7 +42,11 @@ public class ComprovanteAdapter extends RecyclerView.Adapter<ComprovanteAdapter.
     }
     @Override
     public int getItemCount() {
-        return comprovanteList.size();
+        if (comprovanteList != null) {
+            return comprovanteList.size();
+        } else {
+            return 0;
+        }
     }
 
     public static class ComprovanteViewHolder extends RecyclerView.ViewHolder {

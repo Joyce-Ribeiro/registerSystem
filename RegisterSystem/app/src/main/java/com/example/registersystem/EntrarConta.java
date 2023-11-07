@@ -64,6 +64,7 @@ public class EntrarConta extends AppCompatActivity {
                             empresas = new ArrayList<>();
                         }
                         Intent intent = new Intent(EntrarConta.this, RecyclerViewEmpresas.class);
+                        intent.putExtra("cliente", cliente);
                         intent.putExtra("empresasList", empresas);
                         startActivity(intent);
                     }
@@ -86,6 +87,7 @@ public class EntrarConta extends AppCompatActivity {
                             clientes = new ArrayList<>();
                         }
                         Intent intent = new Intent(EntrarConta.this, RecyclerViewClientes.class);
+                        intent.putExtra("empresa", empresa);
                         intent.putExtra("clientesList", clientes);
                         startActivity(intent);
                     }

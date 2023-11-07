@@ -1,5 +1,8 @@
 package com.example.registersystem;
 
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +15,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -29,30 +33,38 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CriarComprovante extends AppCompatActivity {
-    private BDcliente bDcliente;
-    private BDempresa bDempresa;
-
     private File file;
     private BDcomprovante bDcomprovante;
-    private String cpf;
-    private String cnpj;
+    private Cliente cliente;
+    private Empresa empresa;
 
     private SQLiteDatabase conexao;
 
     private DadosOpenHelper dadosOpenHelper;
+    private Uri selectedPdfUri;
+    private ActivityResultLauncher<String> getContent;
 
     final Context context = this;
-    private static final int PICK_FILE_REQUEST_CODE = 123;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_criar_comprovante);
+
+        getContent = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+            if (uri != null) {
+                selectedPdfUri = uri;
+                file = new File(selectedPdfUri.getPath());
+            }
+        });
+
+        if (getIntent().hasExtra("empresa") && getIntent().hasExtra("cliente")) {
+            empresa = (Empresa) getIntent().getSerializableExtra("empresa");
+            cliente = (Cliente) getIntent().getSerializableExtra("cliente");
+        }
+
     }
     public void selecionarArquivo(View view) {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-
-        startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
+        getContent.launch("*/*");
     }
     public void addArquivo(View view) {
         if (file!=null) {
@@ -68,10 +80,7 @@ public class CriarComprovante extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
-            Empresa empresa = bDempresa.buscarEmpresa(cnpj);
-            Cliente cliente = bDcliente.buscarCliente(cpf);
-
+            criarConexao();
             Comprovante comprovante = new Comprovante(nomeArquivo, dataArquivo, file, empresa, cliente);
 
             try {
@@ -87,33 +96,21 @@ public class CriarComprovante extends AppCompatActivity {
             }
         }
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == RESULT_OK) {
-            if (data != null) {
-                Uri selectedFile = data.getData();
-                String filePath = getPathFromURI(selectedFile);
 
-                if (filePath != null) {
-                    file = new File(filePath);
+    private void criarConexao(){
+        try {
+            dadosOpenHelper = new DadosOpenHelper(this);
+            conexao = dadosOpenHelper.getWritableDatabase();
 
-                }
-            }
+            bDcomprovante = new BDcomprovante(conexao);
+
+        }catch (SQLException ex){
+            AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+            dlg.setTitle(R.string.title_erro);
+            dlg.setMessage(ex.getMessage());
+            dlg.setNeutralButton(R.string.action_ok, null);
+            dlg.show();
         }
-    }
-    private String getPathFromURI(Uri contentUri) {
-        String filePath;
-        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
-        if (cursor == null) {
-            filePath = contentUri.getPath();
-        } else {
-            cursor.moveToFirst();
-            int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            filePath = cursor.getString(index);
-            cursor.close();
-        }
-        return filePath;
     }
 }
