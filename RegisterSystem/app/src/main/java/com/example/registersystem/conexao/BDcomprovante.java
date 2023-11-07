@@ -69,7 +69,7 @@ public class BDcomprovante {
         if (resultado.getCount()>0){
             ArrayList<Comprovante> comprovantes = new ArrayList<>();
             while (resultado.moveToNext()) {
-                String nome_comp = (resultado.getString(resultado.getColumnIndexOrThrow("NOME")));
+                String nome_comp = (resultado.getString(resultado.getColumnIndexOrThrow("CNPJ")));
                 Date data_string_to_date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 try {

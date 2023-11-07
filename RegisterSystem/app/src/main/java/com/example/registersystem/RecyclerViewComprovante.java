@@ -55,19 +55,12 @@ public class RecyclerViewComprovante extends AppCompatActivity implements Compro
                 e.printStackTrace();
             }
         }
-        int visibilidade = getIntent().getIntExtra("visibilidade", 0);
 
         RecyclerView recyclerViewComprovantes = binding.RecyclerViewComprovante;
         recyclerViewComprovantes.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewComprovantes.setHasFixedSize(true);
         comprovanteAdapter = new ComprovanteAdapter(comprovantesList, this, this);
         recyclerViewComprovantes.setAdapter(comprovanteAdapter);
-
-        if (visibilidade == 1) {
-            binding.addComprovante.setVisibility(View.GONE);
-        } else {
-            binding.addComprovante.setVisibility(View.VISIBLE);
-        }
 
         binding.addComprovante.setOnClickListener(new View.OnClickListener() {
             @Override

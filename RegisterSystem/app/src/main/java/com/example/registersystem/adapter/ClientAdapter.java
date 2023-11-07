@@ -55,7 +55,6 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
 
                     intent.putExtra("cliente", cliente);
                     intent.putExtra("empresa", empresa);
-                    intent.putExtra("visibilidade", 1);
                     v.getContext().startActivity(intent);
                 }
             }
