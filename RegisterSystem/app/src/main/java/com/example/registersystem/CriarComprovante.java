@@ -43,7 +43,6 @@ public class CriarComprovante extends AppCompatActivity {
 
     private DadosOpenHelper dadosOpenHelper;
 
-    final Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

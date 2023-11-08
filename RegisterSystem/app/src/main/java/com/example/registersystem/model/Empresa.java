@@ -1,8 +1,6 @@
 package com.example.registersystem.model;
 
-import java.io.Serializable;
-
-public class Empresa extends Usuario implements Serializable {
+public class Empresa extends Usuario {
     private String cnpj;
 
 

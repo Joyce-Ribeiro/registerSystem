@@ -72,13 +72,26 @@
         app:layout_constraintTop_toBottomOf="@+id/txtArquivoCnpj"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
+    <Button
+        android:id="@+id/btExcluirComprovante"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="56dp"
+        android:backgroundTint="@color/dark_blue"
+        android:text="Excluir"
+        android:textColor="@color/white"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtArquivoCpf" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@color/azul_turquesa"
-        app:layout_constraintTop_toBottomOf="@+id/txtArquivoCpf"
+        app:layout_constraintTop_toBottomOf="@+id/btExcluirComprovante"
         android:layout_margin="20dp"
         />
 

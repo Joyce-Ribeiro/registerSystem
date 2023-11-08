@@ -20,4 +20,12 @@ public class BDContrato {
 
         conexao.insertOrThrow("CONTRATO", null, contentValues);
     }
+    public void excluirContrato(String cnpj, String cpf) {
+        String whereClause = "CNPJ = ? AND CPF = ?";
+        String[] whereArgs = {cnpj, cpf};
+
+        conexao.delete("CONTRATO", whereClause, whereArgs);
+    }
+
+
 }

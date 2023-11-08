@@ -56,11 +56,12 @@ public class RecyclerViewComprovante extends AppCompatActivity {
         RecyclerView recyclerViewComprovantes = binding.RecyclerViewComprovante;
         recyclerViewComprovantes.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewComprovantes.setHasFixedSize(true);
-        comprovanteAdapter = new ComprovanteAdapter(comprovantesList, this);
+        comprovanteAdapter = new ComprovanteAdapter(comprovantesList, this, visibilidade);
         recyclerViewComprovantes.setAdapter(comprovanteAdapter);
 
         if (visibilidade == 1) {
             binding.addComprovante.setVisibility(View.GONE);
+
         } else {
             binding.addComprovante.setVisibility(View.VISIBLE);
         }

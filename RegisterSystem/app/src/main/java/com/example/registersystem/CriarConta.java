@@ -61,6 +61,10 @@ public class CriarConta extends AppCompatActivity {
                         showErrorMessage("Por Favor preencha todas as lacunas.");
                         return;
                     }
+                    if(senha.length()<8){
+                        showErrorMessage("Senha no minimo 8 caracteres");
+                        return;
+                    }
                     if (!isValidCPF(cpf)) {
                         showErrorMessage("CPF Invalido.");
                         return;
@@ -98,6 +102,10 @@ public class CriarConta extends AppCompatActivity {
 
                     if (nome.isEmpty() || cnpj.isEmpty() || telefone.isEmpty() || email.isEmpty() || senha.isEmpty()) {
                         showErrorMessage("Por Favor preencha todas as lacunas.");
+                        return;
+                    }
+                    if(senha.length()<8){
+                        showErrorMessage("Senha no minimo 8 caracteres");
                         return;
                     }
                     if (!isValidCNPJ(cnpj)) {

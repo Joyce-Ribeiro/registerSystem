@@ -2,16 +2,22 @@ package com.example.registersystem.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.registersystem.R;
 import com.example.registersystem.RecyclerViewClientes;
 import com.example.registersystem.RecyclerViewComprovante;
 import com.example.registersystem.RecyclerViewEmpresas;
+import com.example.registersystem.conexao.BDContrato;
+import com.example.registersystem.database.DadosOpenHelper;
 import com.example.registersystem.databinding.ClienteItemBinding;
 import com.example.registersystem.model.Cliente;
 import com.example.registersystem.model.Empresa;
@@ -22,6 +28,10 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
 
     private ArrayList<Cliente> clienteList;
     private Context context;
+    private SQLiteDatabase conexao;
+
+    private DadosOpenHelper dadosOpenHelper;
+    private BDContrato bdContrato;
 
     public ClientAdapter(ArrayList<Cliente> clienteList, Context context) {
         this.clienteList = clienteList;
@@ -60,6 +70,31 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
                 }
             }
         });
+        holder.binding.btExcluirContrato.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                criarConexao();
+                Cliente cliente = clienteList.get(position);
+
+                if (context instanceof RecyclerViewEmpresas) {
+                    RecyclerViewClientes recyclerViewClientes = (RecyclerViewClientes) context;
+                    Empresa empresa = recyclerViewClientes.getEmpresa();
+
+                    try {
+                        bdContrato.excluirContrato(empresa.getCnpj(),cliente.getCpf());
+
+                    }catch (SQLException ex){
+                        AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+                        dlg.setTitle(R.string.title_erro);
+                        dlg.setMessage(ex.getMessage());
+                        dlg.setNeutralButton(R.string.action_ok, null);
+                        dlg.show();
+                    }
+                }
+            }
+
+        });
+
 
     }
 
@@ -75,4 +110,20 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
             this.binding = binding;
         }
     }
+    private void criarConexao(){
+        try {
+            dadosOpenHelper = new DadosOpenHelper(context);
+            conexao = dadosOpenHelper.getWritableDatabase();
+
+            bdContrato = new BDContrato(conexao);
+
+        }catch (SQLException ex){
+            AlertDialog.Builder dlg = new AlertDialog.Builder(context);
+            dlg.setTitle(R.string.title_erro);
+            dlg.setMessage(ex.getMessage());
+            dlg.setNeutralButton(R.string.action_ok, null);
+            dlg.show();
+        }
+    }
+
 }

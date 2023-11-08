@@ -13,6 +13,7 @@ import com.example.registersystem.model.Empresa;
 import java.io.ByteArrayOutputStream;
 import java.io.Serial;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -44,7 +45,23 @@ public class BDcomprovante {
 
         conexao.insertOrThrow("COMPROVANTE", null, contentValues);
     }
+    public void excluirComprovante(Comprovante comprovante) {
+        if (comprovante != null) {
+            String[] parametros = {
+                    comprovante.getCliente().getCpf(),
+                    comprovante.getEmpresa().getCnpj(),
+                    comprovante.getNomeArquivo(),
+                    String.valueOf(comprovante.getData().getTime()), // Convertendo a data para timestamp (long)
+                    comprovante.getCodigo()
+            };
 
+            StringBuilder sql = new StringBuilder();
+            sql.append("DELETE FROM COMPROVANTE ");
+            sql.append("WHERE CPF = ? AND CNPJ = ? AND NOME = ? AND DATA = ? AND CODIGO = ? ");
+
+
+        }
+    }
 
     public ArrayList<Comprovante> buscarComprovantes(Cliente cliente, Empresa empresa) {
 
