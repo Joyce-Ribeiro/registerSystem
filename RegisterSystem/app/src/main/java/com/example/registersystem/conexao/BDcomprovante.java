@@ -4,26 +4,17 @@ package com.example.registersystem.conexao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.example.registersystem.model.Cliente;
 import com.example.registersystem.model.Comprovante;
 import com.example.registersystem.model.Empresa;
 
-import java.io.ByteArrayOutputStream;
-import java.io.Serial;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.text.ParseException;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import java.io.File;
-import java.io.FileOutputStream;
 public class BDcomprovante {
     private SQLiteDatabase conexao;
 

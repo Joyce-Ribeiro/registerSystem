@@ -73,6 +73,10 @@ public class CriarComprovante extends AppCompatActivity {
                 showErrorMessage("Por Favor Preencha todas as Lacunas.");
                 return;
             }
+            if(dataText.length()!=10){
+                showErrorMessage("Data incorreta");
+                return;
+            }
 
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Date dataArquivo;
@@ -107,7 +111,7 @@ public class CriarComprovante extends AppCompatActivity {
 
         }catch (SQLException ex){
             AlertDialog.Builder dlg = new AlertDialog.Builder(this);
-            dlg.setTitle(R.string.title_erro);
+            dlg.setTitle("Erro");
             dlg.setMessage(ex.getMessage());
             dlg.setNeutralButton(R.string.action_ok, null);
             dlg.show();
