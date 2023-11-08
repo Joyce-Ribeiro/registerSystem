@@ -38,6 +38,7 @@ public class ComprovanteAdapter extends RecyclerView.Adapter<ComprovanteAdapter.
         holder.binding.txtArquivoDate.setText(dataFormatada);
         holder.binding.txtArquivoCnpj.setText(comprovanteList.get(position).getEmpresa().getCnpj());
         holder.binding.txtArquivoCpf.setText(comprovanteList.get(position).getCliente().getCpf());
+        holder.binding.txtArquivoCodigo.setText(comprovanteList.get(position).getCodigo());
 
     }
     @Override

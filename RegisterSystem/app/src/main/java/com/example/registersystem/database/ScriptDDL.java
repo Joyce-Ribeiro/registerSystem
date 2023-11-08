@@ -61,7 +61,7 @@ public class ScriptDDL {
         sql.append("        CPF VARCHAR (11) NOT NULL,   ");
         sql.append("        NOME TEXT NOT NULL,  ");
         sql.append("        DATA VARCHAR (10) NOT NULL, ");
-        sql.append("        ARQUIVO BLOB,   ");
+        sql.append("        CODIGO VARCHAR (100),   ");
         sql.append("        FOREIGN KEY (CNPJ) REFERENCES CONTRATO(CNPJ),   ");
         sql.append("        FOREIGN KEY (CPF) REFERENCES CONTRATO(CPF)   ");
         sql.append("    );");

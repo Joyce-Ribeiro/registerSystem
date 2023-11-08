@@ -45,6 +45,9 @@ public class CriarContrato extends AppCompatActivity {
                     criarConexao();
                     Cliente cliente = bDcliente.buscarCliente(cpf);
                     Empresa empresa = bDempresa.buscarEmpresa(cnpj);
+                    if(cliente==null || empresa==null){
+                        showErrorMessage("Credenciais Incorretas");
+                    }
                     Contrato contrato =new Contrato(cliente, empresa);
 
                     try {
@@ -64,7 +67,13 @@ public class CriarContrato extends AppCompatActivity {
             }
         });
     }
-
+    private void showErrorMessage(String message) {
+        AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+        dlg.setTitle(R.string.title_erro);
+        dlg.setMessage(message);
+        dlg.setNeutralButton(R.string.action_ok, null);
+        dlg.show();
+    }
     private void criarConexao(){
         try {
             dadosOpenHelper = new DadosOpenHelper(this);

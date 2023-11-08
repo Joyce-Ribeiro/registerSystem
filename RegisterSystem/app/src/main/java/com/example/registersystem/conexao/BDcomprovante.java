@@ -1,13 +1,18 @@
 package com.example.registersystem.conexao;
 
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.registersystem.model.Cliente;
 import com.example.registersystem.model.Comprovante;
 import com.example.registersystem.model.Empresa;
 
+import java.io.ByteArrayOutputStream;
+import java.io.Serial;
+import java.sql.Blob;
 import java.text.SimpleDateFormat;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,18 +38,7 @@ public class BDcomprovante {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = sdf.format(comprovante.getData());
         contentValues.put("DATA", dataFormatada);
-
-        byte[] arquivoBytes = null;
-        try {
-            FileInputStream fileInputStream = new FileInputStream(comprovante.getArquivo());
-            arquivoBytes = new byte[(int) comprovante.getArquivo().length()];
-            fileInputStream.read(arquivoBytes);
-            fileInputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        contentValues.put("ARQUIVO", arquivoBytes);
+        contentValues.put("CODIGO", comprovante.getCodigo());
         contentValues.put("CNPJ", comprovante.getEmpresa().getCnpj());
         contentValues.put("CPF", comprovante.getCliente().getCpf());
 
@@ -78,26 +72,14 @@ public class BDcomprovante {
                 }
                 Date data_comp = data_string_to_date;
 
-                byte[] arquivoBytes = (resultado.getBlob(resultado.getColumnIndexOrThrow("ARQUIVO")));
-                File arquivoFile = new File(nome_comp);
-                if (arquivoBytes != null) {
-                    try {
-                        FileOutputStream outputStream = new FileOutputStream(arquivoFile);
-                        outputStream.write(arquivoBytes);
-                        outputStream.close();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                File arq_comp = (arquivoFile);
+                String codigo = (resultado.getString(resultado.getColumnIndexOrThrow("CODIGO")));
                 BDempresa bdempresa = new BDempresa(conexao);
                 com.example.registersystem.conexao.BDcliente bdcliente = new com.example.registersystem.conexao.BDcliente(conexao);
 
                 Empresa emp_comp = bdempresa.buscarEmpresa(resultado.getString(resultado.getColumnIndexOrThrow("CNPJ")));
                 Cliente cli_comp = bdcliente.buscarCliente(resultado.getString(resultado.getColumnIndexOrThrow("CPF")));
 
-                Comprovante comprovante = new Comprovante(nome_comp, data_comp, arquivoFile, emp_comp, cli_comp);
+                Comprovante comprovante = new Comprovante(nome_comp, data_comp, codigo, emp_comp, cli_comp);
 
                 comprovantes.add(comprovante);
             }

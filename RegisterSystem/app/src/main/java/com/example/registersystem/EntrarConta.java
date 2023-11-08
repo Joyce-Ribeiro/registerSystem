@@ -57,6 +57,9 @@ public class EntrarConta extends AppCompatActivity {
                     criarConexao();
 
                     Cliente cliente = bDcliente.buscarCliente(cpf, senha);
+                    if(cliente==null){
+                        showErrorMessage("Credenciais Incorretas.");
+                    }
 
                     if (cliente != null) {
                         ArrayList<Empresa> empresas = bDcliente.buscarEmpresas(cliente);
@@ -80,6 +83,10 @@ public class EntrarConta extends AppCompatActivity {
                     criarConexao();
 
                     Empresa empresa = bDempresa.buscarEmpresa(cnpj, senha);
+
+                    if(empresa==null){
+                        showErrorMessage("Credenciais Incorretas.");
+                    }
 
                     if (empresa != null) {
                         ArrayList<Cliente> clientes = bDempresa.buscarClientes(empresa);
@@ -130,6 +137,13 @@ public class EntrarConta extends AppCompatActivity {
     private void changeLabelToCPF() {
         TextView labelCpfCnpj = findViewById(R.id.labelCpfCnpj);
         labelCpfCnpj.setText("CPF:");
+    }
+    private void showErrorMessage(String message) {
+        AlertDialog.Builder dlg = new AlertDialog.Builder(this);
+        dlg.setTitle(R.string.title_erro);
+        dlg.setMessage(message);
+        dlg.setNeutralButton(R.string.action_ok, null);
+        dlg.show();
     }
 }
 

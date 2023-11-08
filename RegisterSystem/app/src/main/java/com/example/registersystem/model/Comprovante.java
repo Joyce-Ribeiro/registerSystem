@@ -2,20 +2,21 @@ package com.example.registersystem.model;
 
 import java.io.File;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 
 public class Comprovante implements Serializable {
     private String nomeArquivo;
     private Date data;
-    private File arquivo;
+    private String codigo;
     private Empresa empresa;
     private Cliente cliente;
 
 
-    public Comprovante(String nomeArquivo, Date data, File arquivo, Empresa empresa, Cliente cliente) {
+    public Comprovante(String nomeArquivo, Date data, String codigo, Empresa empresa, Cliente cliente) {
         this.nomeArquivo = nomeArquivo;
         this.data = data;
-        this.arquivo = arquivo;
+        this.codigo = codigo;
         this.empresa = empresa;
         this.cliente = cliente;
     }
@@ -37,12 +38,12 @@ public class Comprovante implements Serializable {
         this.data = data;
     }
 
-    public File getArquivo() {
-        return arquivo;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setArquivo(File arquivo) {
-        this.arquivo = arquivo;
+    public void setCodigo(String arquivo) {
+        this.codigo = codigo;
     }
 
     public Empresa getEmpresa() {
