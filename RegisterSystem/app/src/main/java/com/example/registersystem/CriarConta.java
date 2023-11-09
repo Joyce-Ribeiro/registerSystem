@@ -61,10 +61,7 @@ public class CriarConta extends AppCompatActivity {
                         showErrorMessage("Por Favor preencha todas as lacunas.");
                         return;
                     }
-                    if(bDcliente.buscarCliente(cpf)!=null){
-                        showErrorMessage("cpf existente");
-                        return;
-                    }
+
                     if(telefone.length()!=9){
                         showErrorMessage("insira um telefone valido");
                         return;
@@ -108,10 +105,6 @@ public class CriarConta extends AppCompatActivity {
                     String email = editTextEmail.getText().toString();
                     String senha = editTextSenha.getText().toString();
 
-                    if(bDempresa.buscarEmpresa(cnpj)!=null){
-                        showErrorMessage("cnpj existente");
-                        return;
-                    }
                     if(telefone.length()!=9){
                         showErrorMessage("insira um telefone valido");
                         return;
@@ -195,7 +188,7 @@ public class CriarConta extends AppCompatActivity {
         int[] sequencia2 = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
         int soma = 0;
 
-        // Calcula o primeiro dígito verificador
+        
         for (int i = 0; i < 12; i++) {
             soma += Integer.parseInt(String.valueOf(cnpj.charAt(i))) * sequencia1[i];
         }
