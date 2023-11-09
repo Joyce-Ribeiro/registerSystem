@@ -61,6 +61,10 @@ public class CriarConta extends AppCompatActivity {
                         showErrorMessage("Por Favor preencha todas as lacunas.");
                         return;
                     }
+                    if(telefone.length()!=9){
+                        showErrorMessage("insira um telefone valido");
+                        return;
+                    }
                     if(senha.length()<8){
                         showErrorMessage("Senha no minimo 8 caracteres");
                         return;

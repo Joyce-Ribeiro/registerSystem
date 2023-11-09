@@ -47,6 +47,7 @@ public class CriarContrato extends AppCompatActivity {
                     Empresa empresa = bDempresa.buscarEmpresa(cnpj);
                     if(cliente==null || empresa==null){
                         showErrorMessage("Credenciais Incorretas");
+                        return;
                     }
                     Contrato contrato =new Contrato(cliente, empresa);
 
