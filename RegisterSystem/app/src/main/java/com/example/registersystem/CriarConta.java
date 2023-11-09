@@ -61,6 +61,10 @@ public class CriarConta extends AppCompatActivity {
                         showErrorMessage("Por Favor preencha todas as lacunas.");
                         return;
                     }
+                    if(bDcliente.buscarCliente(cpf)!=null){
+                        showErrorMessage("cpf existente");
+                        return;
+                    }
                     if(telefone.length()!=9){
                         showErrorMessage("insira um telefone valido");
                         return;
@@ -103,6 +107,15 @@ public class CriarConta extends AppCompatActivity {
                     String telefone = editTextTelefone.getText().toString();
                     String email = editTextEmail.getText().toString();
                     String senha = editTextSenha.getText().toString();
+
+                    if(bDempresa.buscarEmpresa(cnpj)!=null){
+                        showErrorMessage("cnpj existente");
+                        return;
+                    }
+                    if(telefone.length()!=9){
+                        showErrorMessage("insira um telefone valido");
+                        return;
+                    }
 
                     if (nome.isEmpty() || cnpj.isEmpty() || telefone.isEmpty() || email.isEmpty() || senha.isEmpty()) {
                         showErrorMessage("Por Favor preencha todas as lacunas.");
